@@ -1,0 +1,156 @@
+/* ─── Reset & Base ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f0f4f8;
+  color: #1a202c;
+  min-height: 100vh;
+}
+
+/* ─── Layout ────────────────────────────────────────────────────────────────── */
+.app { display: flex; flex-direction: column; height: 100vh; }
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+  background: #1e3a5f;
+  color: #fff;
+  flex-shrink: 0;
+}
+.app-header h1 { font-size: 1.2rem; font-weight: 700; }
+
+.app-body { display: flex; flex: 1; overflow: hidden; }
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: 220px;
+  background: #fff;
+  border-right: 1px solid #e2e8f0;
+  padding: 16px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.sidebar h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .08em; color: #718096; margin-bottom: 8px; }
+
+.project-list { list-style: none; margin-bottom: 12px; }
+.project-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; border-radius: 6px; cursor: pointer;
+  font-size: 0.875rem; color: #4a5568;
+}
+.project-item:hover { background: #edf2f7; }
+.project-item.active { background: #ebf4ff; color: #2b6cb0; font-weight: 600; }
+.project-count { background: #e2e8f0; color: #718096; border-radius: 99px; padding: 1px 7px; font-size: 0.75rem; }
+
+.add-project { display: flex; flex-direction: column; gap: 6px; }
+.add-project input { padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.875rem; }
+.add-project-btn { width: 100%; margin-top: 4px; }
+
+/* ─── Main ────────────────────────────────────────────────────────────────────── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 16px; gap: 12px; }
+
+/* ─── Filter Bar ──────────────────────────────────────────────────────────────── */
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; }
+.filter-bar select, .filter-bar .sort-dir {
+  padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 6px;
+  background: #fff; font-size: 0.875rem; cursor: pointer;
+}
+
+/* ─── Board ───────────────────────────────────────────────────────────────────── */
+.board { display: flex; gap: 14px; flex: 1; overflow-x: auto; }
+.column { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 8px; }
+
+.col-header {
+  padding: 8px 12px; border-radius: 8px; font-size: 0.85rem;
+  font-weight: 700; display: flex; align-items: center; gap: 8px;
+}
+.col-todo   { background: #ebf4ff; color: #2b6cb0; }
+.col-doing  { background: #fefcbf; color: #975a16; }
+.col-done   { background: #f0fff4; color: #276749; }
+
+.badge { background: #fff; border-radius: 99px; padding: 1px 8px; font-weight: 600; }
+.empty { color: #a0aec0; font-size: 0.8rem; padding: 8px 0; }
+
+/* ─── Task Card ───────────────────────────────────────────────────────────────── */
+.task-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid transparent;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: box-shadow .15s;
+}
+.task-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.task-card.priority-high   { border-left-color: #ef4444; }
+.task-card.priority-medium { border-left-color: #f59e0b; }
+.task-card.priority-low    { border-left-color: #6b7280; }
+
+.task-header { display: flex; align-items: flex-start; gap: 8px; }
+.priority-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.task-title { font-weight: 600; font-size: 0.9rem; line-height: 1.3; }
+.task-desc  { font-size: 0.8rem; color: #718096; line-height: 1.4; }
+
+.task-meta { display: flex; flex-wrap: wrap; gap: 4px; }
+.meta-tag {
+  font-size: 0.72rem; padding: 2px 7px; border-radius: 99px;
+}
+.project-tag { background: #ebf4ff; color: #2b6cb0; }
+.due  { background: #f0fff4; color: #276749; }
+.overdue { background: #fff5f5; color: #c53030; }
+
+.task-actions { display: flex; gap: 4px; margin-top: 4px; }
+.icon-btn {
+  border: none; background: #f7fafc; border-radius: 6px;
+  padding: 4px 8px; cursor: pointer; font-size: 0.8rem; color: #4a5568;
+}
+.icon-btn:hover { background: #edf2f7; }
+.icon-btn.danger:hover { background: #fff5f5; color: #c53030; }
+
+/* ─── Modal ───────────────────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.4);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff; border-radius: 12px; padding: 28px;
+  width: 500px; max-width: 95vw; display: flex; flex-direction: column; gap: 14px;
+}
+.modal h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+.modal label { display: flex; flex-direction: column; gap: 4px; font-size: 0.875rem; font-weight: 500; color: #4a5568; }
+.modal input, .modal select, .modal textarea {
+  padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px;
+  font-size: 0.9rem; font-family: inherit; width: 100%;
+}
+.modal input:focus, .modal select:focus, .modal textarea:focus {
+  outline: none; border-color: #4299e1; box-shadow: 0 0 0 3px #bee3f8;
+}
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-error { color: #c53030; font-size: 0.75rem; font-weight: 400; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────────── */
+.btn {
+  padding: 8px 16px; border: 1px solid #e2e8f0; border-radius: 8px;
+  background: #fff; cursor: pointer; font-size: 0.875rem; font-weight: 500; color: #4a5568;
+}
+.btn:hover { background: #f7fafc; }
+.btn-primary {
+  background: #2563eb; color: #fff; border-color: #2563eb;
+}
+.btn-primary:hover { background: #1d4ed8; }
+
+/* ─── Pagination ─────────────────────────────────────────────────────────────── */
+.pagination { display: flex; align-items: center; gap: 12px; justify-content: center; padding: 8px 0; }
+.pagination button { padding: 6px 14px; }
+
+/* ─── Misc ───────────────────────────────────────────────────────────────────── */
+.loading { text-align: center; padding: 40px; color: #718096; }
